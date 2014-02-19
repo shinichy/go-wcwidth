@@ -1,4 +1,18 @@
 go-wcwidth
 ==========
 
-This is a Go implementation of wcwidth() and wcswidth() (defined in * IEEE Std 1002.1-2001) for Unicode.
+### Install
+
+```
+go get github.com/shinichy/go-wcwidth
+```
+
+### Example
+```
+import (
+	"github.com/shinichy/go-wcwidth"
+)
+
+wcwidth.Wcwidth('あ') // returns 2
+wcwidth.Wcswidth("aあ★")) // returns 5
+```
