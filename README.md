@@ -16,3 +16,6 @@ import (
 wcwidth.Wcwidth('あ') // returns 2
 wcwidth.Wcswidth("aあ★")) // returns 5
 ```
+
+### License
+BSD-like (2-clause, see wcwidth.go)
