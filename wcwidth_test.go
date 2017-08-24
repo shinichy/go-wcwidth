@@ -71,3 +71,22 @@ func TestWcswidthUcs(t *testing.T) {
 		}
 	}
 }
+
+func TestWcswidthWithLimit(t *testing.T) {
+	var tests = []struct {
+		in  string
+		width int
+		offset int
+	}{
+		{"가a나b다ceeee가나다라", 19, 25},
+	}
+
+	var limit = 20
+
+	for _, tt := range tests {
+		if width, offset := WcswidthWithLimit(tt.in, limit); (width != tt.width || offset != tt.offset) {
+			t.Errorf("expected width of %q with limit %v: (%v, %v), actual: (%v, %v)", tt.in, limit, tt.width, tt.offset, width, offset)
+		}
+	}
+}
+

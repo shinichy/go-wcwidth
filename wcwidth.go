@@ -27,6 +27,8 @@
 
 package wcwidth
 
+import "unicode/utf8"
+
 type interval struct {
 	first rune
 	last  rune
@@ -281,4 +283,24 @@ func Wcwidth(ucs rune) int {
 
 func Wcswidth(s string) int {
 	return wcswidthCommon(s, Wcwidth)
+}
+
+func wcswidthCommonWithLimit(s string, wcwidth func(rune) int, max int) (int, int) {
+	w, width, offset := 0, 0, 0
+	for _, r := range []rune(s) {
+		w = wcwidth(r)
+		if w < 0 {
+			return -1, offset
+		}
+		if width+w > max {
+			break
+		}
+		width += w
+		offset += utf8.RuneLen(r)
+	}
+	return width, offset
+}
+
+func WcswidthWithLimit(s string, max int) (int, int) {
+	return wcswidthCommonWithLimit(s, Wcwidth, max)
 }
